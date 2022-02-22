@@ -14,6 +14,13 @@ lazy_static! {
 }
 
 #[php_function]
+pub fn example_ext_pass_array_of_callbacks(data: HashMap<String, ZendCallable>) {
+    for (key, call) in data.iter() {
+        call.try_call(vec![]).expect("Failed to call function");
+    }
+}
+
+#[php_function]
 pub fn example_ext_pass_callback(call: ZendCallable) {
     let val = call
         .try_call(vec![&0, &1, &"Hello"])
